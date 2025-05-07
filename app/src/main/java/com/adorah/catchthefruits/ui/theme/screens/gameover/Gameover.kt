@@ -22,11 +22,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.compose.rememberNavController
-import com.adorah.catchthefruits.ui.theme.screens.home.home
 
 @Composable
-fun Failed(
+fun Gameover(
     finalScore: Int,
     onPlayAgain: () -> Unit,
     onBackToMenu: () -> Unit
@@ -86,8 +84,12 @@ fun Failed(
         }
     }
 }
-@Preview(showBackground = true)
+@Preview
 @Composable
-fun Failed() {
-    home(rememberNavController())
+fun GameoverPreview() {
+    Gameover(
+        finalScore = 10,
+        onPlayAgain = {},
+        onBackToMenu = {}
+    )
 }

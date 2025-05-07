@@ -24,7 +24,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 
 @Composable
-fun Home(navController: NavHostController) {
+fun Homescreen(navController: NavHostController) {
     Surface(
         modifier = Modifier.fillMaxSize(),
 
@@ -61,5 +61,5 @@ fun Home(navController: NavHostController) {
 @Preview
 @Composable
  private fun home() {
-    Home(rememberNavController())
+    Homescreen(rememberNavController())
 }

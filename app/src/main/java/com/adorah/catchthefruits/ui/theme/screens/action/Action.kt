@@ -130,7 +130,7 @@ fun Action(navController: NavHostController) {
 }
 @Preview
 @Composable
-fun Action() {
-    Action(rememberNavController())
+fun Actionpreview() {
+    Action(navController = rememberNavController())
 }
 

@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.adorah.catchthefruits.navigation.ROUTE_ACTION
 
 @Composable
 fun Homescreen(navController: NavHostController) {
@@ -47,7 +48,7 @@ fun Homescreen(navController: NavHostController) {
             Spacer(modifier = Modifier.height(40.dp))
 
             Button(
-                onClick = onPlayClicked,
+                onClick = {navController.navigate(ROUTE_ACTION)},
                 modifier = Modifier
                     .width(200.dp)
                     .height(50.dp),

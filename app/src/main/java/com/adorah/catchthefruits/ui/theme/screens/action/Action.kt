@@ -1,28 +1,30 @@
 package com.adorah.catchthefruits.ui.theme.screens.action
 
+
+
+//
+
+
+
+
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.gestures.detectTapGestures
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntOffset
@@ -31,6 +33,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.delay
+import kotlin.math.roundToInt
 import kotlin.random.Random
 
 @Composable
@@ -56,26 +59,29 @@ fun Action(navController: NavHostController) {
             )
             .pointerInput(Unit) {
                 detectTapGestures { offset ->
-                    basketX.value = offset.x - basketWidth / 2
+                    // control the basket
+                    basketX.value = offset.x
+                        .coerceIn(0f, screenWidth.value - basketWidth)
                 }
             }
     ) {
-        // Score Display
         Text(
             text = "Score: ${score.value}",
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
+            fontStyle = FontStyle.Italic,
+            fontFamily = FontFamily.Cursive,
             color = Color.Black,
             modifier = Modifier
                 .align(Alignment.TopCenter)
                 .padding(top = 24.dp)
         )
 
-        // Basket
+        // The basket
         Box(
             modifier = Modifier
                 .offset {
-                    IntOffset(basketX.value.toInt(), (screenHeight.value * 0.8).toInt())
+                    IntOffset(basketX.value.roundToInt(), (screenHeight.value * 0.8f).roundToInt())
                 }
                 .size(width = basketWidth.dp, height = basketHeight.dp)
                 .background(
@@ -87,34 +93,36 @@ fun Action(navController: NavHostController) {
                 .border(2.dp, Color.Black, RoundedCornerShape(12.dp))
         )
 
-        // Fruit
+        // The fruit
         Box(
             modifier = Modifier
-                .offset { IntOffset(fruitX.value.toInt(), fruitY.value.toInt()) }
+                .offset { IntOffset(fruitX.value.roundToInt(), fruitY.value.roundToInt()) }
                 .size(40.dp)
                 .background(Color.Red, shape = CircleShape)
                 .border(2.dp, Color.DarkGray, CircleShape)
         )
     }
 
-    // Animate fruit and check for catch
-    LaunchedEffect(score.value) {
+    // Animation and game loop
+    LaunchedEffect(Unit) {
         while (true) {
+            // Reset the fruit position
             fruitY.snapTo(0f)
             fruitX.value = Random.nextInt(50, (screenWidth.value - 50).toInt()).toFloat()
 
+            // Fruit falling
             fruitY.animateTo(
                 targetValue = screenHeight.value * 0.85f,
                 animationSpec = tween(durationMillis = 2000)
             )
 
-            // Check for catch
+            // catch
             val basketTopY = screenHeight.value * 0.8f
             val basketBottomY = basketTopY + basketHeight
             val basketLeft = basketX.value
             val basketRight = basketX.value + basketWidth
 
-            val fruitCenterX = fruitX.value + 20f // fruit radius
+            val fruitCenterX = fruitX.value + 20f
             val fruitBottomY = fruitY.value + 40f
 
             val isCaught = fruitBottomY in basketTopY..basketBottomY &&
@@ -128,9 +136,8 @@ fun Action(navController: NavHostController) {
         }
     }
 }
+
 @Preview
 @Composable
-fun Actionpreview() {
-    Action(navController = rememberNavController())
-}
-
+fun ActionPreview() {
+    Action(navController = rememberNavController())}

@@ -18,7 +18,10 @@ fun AppNavHost(modifier: Modifier=Modifier,navController:NavHostController= reme
 
     NavHost(navController = navController, modifier=modifier, startDestination = startDestination ){
         composable(ROUTE_SPLASH){
-            Splashscreen(navController)
+            Splashscreen(
+                navController,
+                onStartClicked = TODO()
+            )
         }
         composable(ROUTE_HOME){
             Homescreen(navController)
@@ -27,7 +30,12 @@ fun AppNavHost(modifier: Modifier=Modifier,navController:NavHostController= reme
             Action(navController)
         }
         composable(ROUTE_GAMEOVER){
-            Gameover(navController)
+            Gameover(
+                navController,
+                finalScore = 10,
+                onPlayAgain = {ROUTE_ACTION},
+                onBackToMenu = {ROUTE_HOME}
+            )
         }
 
 

@@ -19,11 +19,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.adorah.catchthefruits.R
+import com.adorah.catchthefruits.navigation.ROUTE_ACTION
 
 @Composable
-fun Splashscreen(onStartClicked: () -> Unit) {
+fun Splashscreen(navController: NavController, onStartClicked: () -> Unit) {
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = Color(0xFF4CAF50) // green cartoonish background
@@ -67,5 +69,8 @@ fun Splashscreen(onStartClicked: () -> Unit) {
 @Preview
 @Composable
 fun splashpreview(){
-    Splashscreen(rememberNavController())
+    Splashscreen(
+        rememberNavController(),
+        onStartClicked = { ROUTE_ACTION }
+    )
 }

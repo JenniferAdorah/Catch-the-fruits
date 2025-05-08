@@ -22,16 +22,20 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.adorah.catchthefruits.navigation.ROUTE_ACTION
+import com.adorah.catchthefruits.navigation.ROUTE_HOME
 
 @Composable
-fun Gameover(
+fun Gameover(navController: NavController,
     finalScore: Int,
     onPlayAgain: () -> Unit,
     onBackToMenu: () -> Unit
 ) {
     Surface(
         modifier = Modifier.fillMaxSize(),
-        color = Color(0xFFFFF3E0)
+        color = Color.Gray
     ) {
         Column(
             modifier = Modifier
@@ -89,7 +93,8 @@ fun Gameover(
 fun GameoverPreview() {
     Gameover(
         finalScore = 10,
-        onPlayAgain = {},
-        onBackToMenu = {}
+        onPlayAgain = { ROUTE_ACTION },
+        onBackToMenu = { ROUTE_HOME },
+        navController = rememberNavController()
     )
 }
